@@ -85,7 +85,7 @@ int main()
 
 
     al_draw_bitmap(imagen, 0, 0, 0);
-    al_draw_text(font, al_map_rgb(0, 0, 0), 0, 0, 0, "Hola Mundo");
+    al_draw_text(font2, al_map_rgb(0, 0, 0), 0, 0, 0, "Hola Mundo");
 
     al_draw_filled_rectangle(520, 0, 640, 60, azul);
     al_draw_text(font2, al_map_rgb(0, 0, 0), 525, 5, 0, "Salir");
