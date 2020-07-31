@@ -40,18 +40,12 @@ int main()
     al_init_font_addon();
     al_init_ttf_addon();
 
-    al_set_new_display_option(ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
-    al_set_new_display_option(ALLEGRO_SAMPLES, 8, ALLEGRO_SUGGEST);
-    al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
-
-    ALLEGRO_DISPLAY* disp = al_create_display(640, 480);
+    ALLEGRO_DISPLAY* disp = al_create_display(640, 450);
     must_init(disp, "display");
 
     ALLEGRO_FONT* font = al_load_ttf_font("YARDSALE.ttf", 64, 0);
     ALLEGRO_FONT* font2 = al_load_ttf_font("YARDSALE.ttf", 36, 0);
 
-    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 30.0);
-    must_init(timer, "timer");
 
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     must_init(queue, "queue");
@@ -70,13 +64,10 @@ int main()
         return 1;
     }
 
-    al_register_event_source(queue, al_get_display_event_source(disp));
-    al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
 
     bool done = false;
     ALLEGRO_EVENT event;
-
     ALLEGRO_COLOR azul = al_map_rgba_f(0, 0, 0.5, 0.5);
     ALLEGRO_COLOR rojo = al_map_rgba_f(0.5, 0, 0, 0.5);
 
@@ -117,9 +108,6 @@ int main()
             }
             break;
 
-        case ALLEGRO_EVENT_DISPLAY_CLOSE:
-            done = true;
-            break;
         }
 
         if (done)
@@ -129,7 +117,6 @@ int main()
 
     al_destroy_bitmap(imagen);
     al_destroy_display(disp);
-    al_destroy_timer(timer);
     al_destroy_event_queue(queue);
     al_destroy_font(font);
     al_destroy_font(font2);
