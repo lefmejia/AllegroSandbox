@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include "Rueda.h"
 
 /*Nota:
     1- Las esctuturas estan al principio y el main al final.
@@ -271,6 +272,7 @@ void cambioMap(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backgrou
 //Nivel 1, 2 y 3 temporal, copia de estruMap solo tiene el boton de regresar
 
 bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* background, int currentMap) {
+
     al_clear_to_color(al_map_rgb(0, 0, 0));
     queue = al_create_event_queue();
     must_init(queue, "queue");
@@ -280,16 +282,25 @@ bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
     must_init(al_init_primitives_addon(), "primitives");
     al_register_event_source(queue, al_get_mouse_event_source());
     al_register_event_source(queue, al_get_keyboard_event_source());
+    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60.0);
+    al_register_event_source(queue, al_get_timer_event_source(timer));
 
     bool done = false;
 
     background = al_load_bitmap("nivel1.jpg");;
     al_draw_bitmap(background, 0, 0, 0);
     al_draw_text(font, al_map_rgb(0, 0, 0), 300, 0, 0, "Nivel 1");
-    botonVolver(font, color, background);
+    //botonVolver(font, color, background);
+    Rueda rueda(0);
+    al_start_timer(timer);
     while (true) {
         color = azul;
-
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+        al_draw_bitmap(background, 0, 0, 0);
+        al_draw_text(font, al_map_rgb(0, 0, 0), 300, 0, 0, "Nivel 1");
+        //botonVolver(font, color, background);
+        rueda.Draw();
+        al_flip_display();
         al_wait_for_event(queue, &event);
 
         switch (event.type)
@@ -298,11 +309,12 @@ bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
             //pasa por cierto rango cambia de color
             if (event.mouse.x > 670 && event.mouse.x < 800 && event.mouse.y>0 && event.mouse.y < 60) {
                 color = rojo;
-                botonVolver(font, color, background);
+                //botonVolver(font, color, background);
+                
             }
             else {
                 color = azul;
-                botonVolver(font, color, background);
+                //botonVolver(font, color, background);
             }
             break;
 
@@ -319,11 +331,22 @@ bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
                     color = azul;
                     break;
                 }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_G) {
+                    rueda.setTargetF(3);
+                    break;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_R) {
+                    rueda.setTargetF(0);
+                    rueda.setAngulo(0);
+                    break;
+                }
                
             }
             break;
-        }
 
+        case ALLEGRO_EVENT_TIMER:
+            break;
+        }
         if (done) {
             cargar = 0;
             return true;
@@ -373,6 +396,7 @@ bool entrarNivel2(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
                 color = azul;
             }
             break;
+            
         case ALLEGRO_EVENT_KEY_DOWN:
             if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
                 if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
