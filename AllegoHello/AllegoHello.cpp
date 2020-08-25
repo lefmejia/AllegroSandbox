@@ -462,11 +462,11 @@ bool displayPregunta(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* ba
                     break;
                 }
                 else if (event.keyboard.keycode == ALLEGRO_KEY_3) {
-                    respuesta = 0;
+                    respuesta = 2;
                     break;
                 }
                 else if (event.keyboard.keycode == ALLEGRO_KEY_4) {
-                    respuesta = 0;
+                    respuesta = 3;
                     break;
                 }
 
