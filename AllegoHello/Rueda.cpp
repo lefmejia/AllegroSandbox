@@ -45,3 +45,7 @@ void Rueda::Girar(float target)
 void Rueda::setAngulo(float _angulo) {
 	this->angulo = _angulo;
 }
+
+float Rueda::getAngulo() {
+	return this->angulo;
+}

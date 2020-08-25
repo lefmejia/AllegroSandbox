@@ -13,5 +13,6 @@ public:
 	void setTargetF(float);
 	void Girar(float);
 	void setAngulo(float);
+	float getAngulo();
 };
 #endif // !RUEDA_H

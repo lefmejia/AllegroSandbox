@@ -7,6 +7,9 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include "Rueda.h"
+#include "Preguntas.h"
+#include <time.h>
+#include <random>
 
 /*Nota:
     1- Las esctuturas estan al principio y el main al final.
@@ -30,6 +33,8 @@ void cambioMap(ALLEGRO_FONT*, ALLEGRO_COLOR, ALLEGRO_BITMAP*, int);
 bool entrarNivel1(ALLEGRO_FONT*, ALLEGRO_COLOR, ALLEGRO_BITMAP*, int);
 bool entrarNivel2(ALLEGRO_FONT*, ALLEGRO_COLOR, ALLEGRO_BITMAP*, int);
 bool entrarNivel3(ALLEGRO_FONT*, ALLEGRO_COLOR, ALLEGRO_BITMAP*, int);
+
+bool displayPregunta(ALLEGRO_FONT*, ALLEGRO_COLOR, ALLEGRO_BITMAP*, int, int);
 
 void must_init(bool test, const char* description)
 {
@@ -287,6 +292,11 @@ bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
 
     bool done = false;
 
+    string pregunta = "";
+    int respuesta = -1;
+    int randCat;
+    int randPreg;
+
     background = al_load_bitmap("nivel1.jpg");;
     al_draw_bitmap(background, 0, 0, 0);
     al_draw_text(font, al_map_rgb(0, 0, 0), 300, 0, 0, "Nivel 1");
@@ -333,6 +343,11 @@ bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
                 }
                 else if (event.keyboard.keycode == ALLEGRO_KEY_G) {
                     rueda.setTargetF(3);
+                    randCat = rand() % 4;
+                    randPreg = rand() % 5;
+
+                    displayPregunta(font, color, background, randCat, randPreg);
+                    
                     break;
                 }
                 else if (event.keyboard.keycode == ALLEGRO_KEY_R) {
@@ -341,6 +356,120 @@ bool entrarNivel1(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
                     break;
                 }
                
+            }
+            break;
+
+        case ALLEGRO_EVENT_TIMER:
+            break;
+        }
+        if (done) {
+            cargar = 0;
+            return true;
+        }
+    }
+}
+
+bool displayPregunta(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* background, int cat, int pos) {
+    Preguntas preguntas;
+
+    ALLEGRO_FONT* font2 = al_load_ttf_font("YARDSALE.ttf", 30, 0);
+
+    al_clear_to_color(al_map_rgb(0, 0, 0));
+    queue = al_create_event_queue();
+    must_init(queue, "queue");
+    must_init(al_init_image_addon(), "image");
+    must_init(al_install_mouse(), "mouse");
+    must_init(al_install_keyboard(), "keyboard");
+    must_init(al_init_primitives_addon(), "primitives");
+    al_register_event_source(queue, al_get_mouse_event_source());
+    al_register_event_source(queue, al_get_keyboard_event_source());
+    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60.0);
+    al_register_event_source(queue, al_get_timer_event_source(timer));
+
+    bool done = false;
+
+    string Categoria;
+
+    switch (cat) {
+    case 0:
+        Categoria = "Arte";
+        break;
+    case 1:
+        Categoria = "Politica";
+        break;
+    case 2:
+        Categoria = "Ciencia";
+        break;
+    case 3:
+        Categoria = "Historia";
+        break;
+    }
+
+    int respuesta = -1;
+
+    background = al_load_bitmap("nivel1.jpg");;
+    //al_draw_bitmap(background, 0, 0, 0);
+    al_draw_text(font, al_map_rgb(0, 0, 0), 300, 0, 0, Categoria.c_str());
+    //al_draw_text(font2, al_map_rgb(0, 0, 0), 100, 100, 0, preguntas.escogerPregunta(cat,pos).c_str());
+    al_draw_multiline_text(font2, al_map_rgb(255, 255, 255), 100, 100, 700, 40, 0, preguntas.escogerPregunta(cat, pos).c_str());
+    al_start_timer(timer);
+
+    while (true) {
+        color = azul;
+        al_clear_to_color(al_map_rgb(0, 0, 0));
+       // al_draw_bitmap(background, 0, 0, 0);
+        al_draw_text(font, al_map_rgb(255, 255, 255), 300, 0, 0, Categoria.c_str());
+        //al_draw_text(font2, al_map_rgb(0, 0, 0), 100, 100, 0, preguntas.escogerPregunta(cat, pos).c_str());
+        al_draw_multiline_text(font2, al_map_rgb(255, 255, 255), 100, 100, 700, 40, 0, preguntas.escogerPregunta(cat, pos).c_str());
+        //botonVolver(font, color, background);
+        al_flip_display();
+        al_wait_for_event(queue, &event);
+
+        switch (event.type)
+        {
+        case ALLEGRO_EVENT_MOUSE_AXES:
+            //pasa por cierto rango cambia de color
+            if (event.mouse.x > 670 && event.mouse.x < 800 && event.mouse.y>0 && event.mouse.y < 60) {
+                color = rojo;
+                //botonVolver(font, color, background);
+
+            }
+            else {
+                color = azul;
+                //botonVolver(font, color, background);
+            }
+            break;
+
+        case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+            if (event.mouse.x > 670 && event.mouse.x < 800 && event.mouse.y>0 && event.mouse.y < 100) {
+                done = true;
+                color = azul;
+            }
+            break;
+        case ALLEGRO_EVENT_KEY_DOWN:
+            if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
+                if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+                    done = true;
+                    color = azul;
+                    break;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_1) {
+                    respuesta = 0;
+                    break;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_2) {
+                    respuesta = 1;
+                    break;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_3) {
+                    respuesta = 0;
+                    break;
+                }
+                else if (event.keyboard.keycode == ALLEGRO_KEY_4) {
+                    respuesta = 0;
+                    break;
+                }
+
             }
             break;
 
@@ -480,6 +609,7 @@ bool entrarNivel3(ALLEGRO_FONT* font, ALLEGRO_COLOR color, ALLEGRO_BITMAP* backg
 //Must init que atrapa cualquier error
 int main()
 {
+    srand(time(0));
     al_init();
     al_init_font_addon();
     al_init_ttf_addon();
