@@ -6,6 +6,7 @@ class Rueda {
 private:
 	float angulo,targetF;
 	int vuetas;
+	bool fin;
 	ALLEGRO_BITMAP* background;
 public:
 	Rueda(int);
@@ -14,5 +15,6 @@ public:
 	void Girar(float);
 	void setAngulo(float);
 	float getAngulo();
+	bool getFin();
 };
 #endif // !RUEDA_H

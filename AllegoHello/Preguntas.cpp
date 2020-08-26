@@ -1,11 +1,11 @@
 #include "Preguntas.h"
 
 Preguntas::Preguntas() {
-	bancoPreguntas[0][0] = "Uno de los siguientes personajes fue \nel encargado de pintar la capilla Sixtina: \nA) Miguel Ángel. \nB) Donatello. \nC) Leonardo Da Vinci. \nD) Francis Bacon";
-	bancoPreguntas[0][1] = "Genio del renacimiento que esculpió \nel Moisés, el David y la Pietá: \nA) Miguel Ángel Buonarroti. \nB) Leonardo Da Vinci. \nC) Rafael Sanzio. \nD) Galileo Galilei";
-	bancoPreguntas[0][2] = "Durante el renacimiento el estilo \nartístico que impregnó el arte, la filosofía, la pintura escritura fue el: \nA) El Gótico. \nB) El barroco. \nC) el clasicismo. \nD) Romanticismo";
-	bancoPreguntas[0][3] = "Durante el renacimiento surge una \nnueva visión del hombre, que se vio reflejada en el arte, en la política y en las ciencias sociales y humanas, a lo que se denomina: \nA) Antropocentrismo. \nB) Humanismo. \nC) Paradigma antropológico. \nD) Teocentrismo.";
-	bancoPreguntas[0][4] = "Cuatro genios del renacimiento (Leonardo, \nDonatello, Rafael y Michelangelo) han sido llevados a la pantalla en los comics de : \nA) Las tortugas ninjas. \nB) Los caballeros del Zodiaco. \nC) Los cuatro fantásticos. \nD) Los antagonistas de Attack Titan";
+	bancoPreguntas[0][0] = "Uno de los siguientes personajes fue el encargado de pintar la capilla Sixtina: \nA) Miguel Ángel. \nB) Donatello. \nC) Leonardo Da Vinci. \nD) Francis Bacon";
+	bancoPreguntas[0][1] = "Genio del renacimiento que esculpió el Moisés, el David y la Pietá: \nA) Miguel Ángel Buonarroti. \nB) Leonardo Da Vinci. \nC) Rafael Sanzio. \nD) Galileo Galilei";
+	bancoPreguntas[0][2] = "Durante el renacimiento el estilo artístico que impregnó el arte, la filosofía, la pintura escritura fue el: \nA) El Gótico. \nB) El barroco. \nC) el clasicismo. \nD) Romanticismo";
+	bancoPreguntas[0][3] = "Durante el renacimiento surge una nueva visión del hombre, que se vio reflejada en el arte, en la política y en las ciencias sociales y humanas, a lo que se denomina: \nA) Antropocentrismo. \nB) Humanismo. \nC) Paradigma antropológico. \nD) Teocentrismo.";
+	bancoPreguntas[0][4] = "Cuatro genios del renacimiento (Leonardo, Donatello, Rafael y Michelangelo) han sido llevados a la pantalla en los comics de : \nA) Las tortugas ninjas. \nB) Los caballeros del Zodiaco. \nC) Los cuatro fantásticos. \nD) Los antagonistas de Attack Titan";
 	
 	bancoPreguntas[1][0] = "Durante el renacimiento, el modelo de gobierno es uno de los siguientes: \nA) Monarquía absoluta. \nB) Tiranía republicana. \nC) Democracia participativa. \nD) Liberalismo político.";
 	bancoPreguntas[1][1] = "De los siguientes acontecimientos, selecciones el que inicia el período moderno: \nA) Toma de Constantinopla. \nB) Tratado de paz de westfalia. \nC) Toma de la Bastilla. \nD) La ruta de la seda.";

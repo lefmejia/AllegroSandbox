@@ -6,7 +6,7 @@
 
 double pi = 2 * acos(0.0);
 
-Rueda::Rueda(int target):angulo(0),vuetas(3),targetF(target),background(al_load_bitmap("RuedaFilo.png"))
+Rueda::Rueda(int target):angulo(0),vuetas(3),targetF(target),background(al_load_bitmap("RuedaFilo.png")),fin(false)
 {
 	background = al_load_bitmap("RuedaFilo.png");
 }
@@ -19,6 +19,7 @@ void Rueda::Draw()
 }
 
 void Rueda::setTargetF(float target) {
+	fin = false;
 	this->targetF = target;
 }
 
@@ -33,12 +34,21 @@ void Rueda::Girar(float target)
 				angulo = 0;
 			}
 		}
+		else 
+		{
+			vuetas = 3;
+			setTargetF(0);
+			angulo = 0;
+			fin = true;
+			al_rest(1);
+		}
 		
 	}
 	else if (target >= angulo && vuetas == 0) {
 		vuetas = 3;
 		setTargetF(0);
 		angulo = 0;
+		fin = true;
 	}
 }
 
@@ -48,4 +58,8 @@ void Rueda::setAngulo(float _angulo) {
 
 float Rueda::getAngulo() {
 	return this->angulo;
+}
+
+bool Rueda::getFin() {
+	return this->fin;
 }
